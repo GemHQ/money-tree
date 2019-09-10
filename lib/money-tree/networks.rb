@@ -29,6 +29,47 @@ module MoneyTree
           protocol_version: 70001,
           human_readable_part: "tb",
         },
+        zcoin: {
+          address_version: '52',
+          p2sh_version: '0x7',
+          p2sh_char: 'a',
+          privkey_version: '80',
+          privkey_compression_flag: '01',
+          extended_privkey_version: "0488ade4",
+          extended_pubkey_version: "0488b21e",
+          compressed_wif_chars: %w(K L),
+          uncompressed_wif_chars: %w(5),
+          protocol_version: 70001,
+          # Unknown what this should be so let it break at runtime
+          human_readable_part: nil,
+        },
+        litecoin: {
+          address_version: '30',
+          p2sh_version: '32',
+          p2sh_char: 'L',
+          privkey_version: '80',
+          privkey_compression_flag: '01',
+          extended_privkey_version: "0488ade4",
+          extended_pubkey_version: "0488b21e",
+          compressed_wif_chars: %w(K L),
+          uncompressed_wif_chars: %w(5),
+          protocol_version: 70001,
+          human_readable_part: "ltc",
+        },
+        bitcoin_cash: {
+          address_version: '00',
+          p2sh_version: '05',
+          p2sh_char: '3',
+          privkey_version: '80',
+          privkey_compression_flag: '01',
+          extended_privkey_version: "0488ade4",
+          extended_pubkey_version: "0488b21e",
+          compressed_wif_chars: %w(K L),
+          uncompressed_wif_chars: %w(5),
+          protocol_version: 70001,
+          # No such thing so let it break at runtime
+          human_readable_part: nil,
+        }
       )
       hsh[:testnet3] = hsh[:bitcoin_testnet]
       hsh
