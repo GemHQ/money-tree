@@ -69,6 +69,20 @@ module MoneyTree
           protocol_version: 70001,
           # No such thing so let it break at runtime
           human_readable_part: nil,
+        },
+        qtum: {
+          address_version: '3a',
+          p2sh_version: '32',
+          p2sh_char: '3',
+          privkey_version: '80',
+          privkey_compression_flag: '01',
+          extended_privkey_version: "0488ade4",
+          extended_pubkey_version: "0488b21e",
+          compressed_wif_chars: %w(K L),
+          uncompressed_wif_chars: %w(5),
+          protocol_version: 70001,
+          # Unknown what this should be so let it break at runtime
+          human_readable_part: nil,
         }
       )
       hsh[:testnet3] = hsh[:bitcoin_testnet]
