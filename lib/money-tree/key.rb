@@ -38,7 +38,7 @@ module MoneyTree
 
     def initialize(opts = {})
       @options = opts
-      @ec_key = PKey::EC.new GROUP_NAME
+      @ec_key = PKey::EC.new MoneyTree.getCurve()[:name] || GROUP_NAME
       if @options[:key]
         @raw_key = @options[:key]
         @key = parse_raw_key
@@ -176,7 +176,7 @@ module MoneyTree
         @key = @raw_key = to_hex
       else
         @raw_key = p_key
-        @group = PKey::EC::Group.new GROUP_NAME
+        @group = PKey::EC::Group.new MoneyTree.getCurve()[:name] || GROUP_NAME
         @key = parse_raw_key
       end
 
