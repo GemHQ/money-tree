@@ -243,6 +243,16 @@ They are all equivalent ways of saying the same thing, but the first two are jus
 
 To add just a little more confusion to the mix, some wallets will use negative `i` values to also denote private derivation. Any `i` value that is negative will be processed using private derivation by this library. e.g. `"m/-1/1"`. (NOTE: known issue, see below)
 
+## Change Network
+
+MoneyTree will operate in mainnet by default. To activate Bitcoin Testnet simply run
+
+```ruby
+MoneyTree.configure do |config|
+  config.network = :testnet3
+end
+```
+
 
 ## Contributing
 

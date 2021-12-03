@@ -129,7 +129,8 @@ module MoneyTree
       int_to_hex @ec_key.private_key, 64
     end
 
-    def to_wif(compressed: true, network: :bitcoin)
+    def to_wif(compressed: true, network: nil)
+      network ||= MoneyTree.network
       source = NETWORKS[network][:privkey_version] + to_hex
       source += NETWORKS[network][:privkey_compression_flag] if compressed
       hash = sha256(source)
@@ -157,7 +158,8 @@ module MoneyTree
       encode_base64(to_hex)
     end
 
-    def to_s(network: :bitcoin)
+    def to_s(network: nil)
+      network ||= MoneyTree.network
       to_wif(network: network)
     end
 
@@ -246,7 +248,8 @@ module MoneyTree
       ripemd160 hash
     end
 
-    def to_address(network: :bitcoin)
+    def to_address(network: nil)
+      network ||= MoneyTree.network
       hash = to_ripemd160
       address = NETWORKS[network][:address_version] + hash
       to_serialized_base58 address

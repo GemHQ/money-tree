@@ -104,8 +104,9 @@ module MoneyTree
       bytes_to_int hash.bytes.to_a[32..-1]
     end
 
-    def to_serialized_hex(type = :public, network: :bitcoin)
+    def to_serialized_hex(type = :public, network: nil)
       raise PrivatePublicMismatch if type.to_sym == :private && private_key.nil?
+      network ||= MoneyTree.network
       version_key = type.to_sym == :private ? :extended_privkey_version : :extended_pubkey_version
       hex = NETWORKS[network][version_key] # version (4 bytes)
       hex += depth_hex(depth) # depth (1 byte)
@@ -115,12 +116,14 @@ module MoneyTree
       hex += type.to_sym == :private ? "00#{private_key.to_hex}" : public_key.compressed.to_hex
     end
 
-    def to_bip32(type = :public, network: :bitcoin)
+    def to_bip32(type = :public, network: nil)
       raise PrivatePublicMismatch if type.to_sym == :private && private_key.nil?
+      network ||= MoneyTree.network
       to_serialized_base58 to_serialized_hex(type, network: network)
     end
 
-    def to_serialized_address(type = :public, network: :bitcoin)
+    def to_serialized_address(type = :public, network: nil)
+      network ||= MoneyTree.network
       puts 'Node.to_serialized_address is DEPRECATED. Please use .to_bip32.'
       to_bip32(type, network: network)
     end
@@ -142,7 +145,8 @@ module MoneyTree
       end
     end
 
-    def to_address(compressed=true, network: :bitcoin)
+    def to_address(compressed=true, network: nil)
+      network ||= MoneyTree.network
       address = NETWORKS[network][:address_version] + to_identifier(compressed)
       to_serialized_base58 address
     end
