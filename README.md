@@ -3,11 +3,11 @@
 [![GitHub release (latest by date)](https://img.shields.io/github/v/release/GemHQ/money-tree)](https://github.com/GemHQ/money-tree/releases)
 [![Gem](https://img.shields.io/gem/v/money-tree)](https://rubygems.org/gems/money-tree)
 [![Gem](https://img.shields.io/gem/dt/money-tree)](https://rubygems.org/gems/money-tree)
+[![GitHub top language](https://img.shields.io/github/languages/top/GemHQ/money-tree?color=red)](https://github.com/GemHQ/money-tree/pulse)
 
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/GemHQ/money-tree/Spec)](https://github.com/GemHQ/money-tree/actions)
 [![Coverage Status](https://img.shields.io/coveralls/GemHQ/money-tree.svg)](https://coveralls.io/r/GemHQ/money-tree?branch=master)
 [![Code Climate](https://codeclimate.com/github/GemHQ/money-tree.png)](https://codeclimate.com/github/GemHQ/money-tree)
-[![GitHub top language](https://img.shields.io/github/languages/top/GemHQ/money-tree?color=red)](https://github.com/GemHQ/money-tree/pulse)
 [![GitHub](https://img.shields.io/github/license/GemHQ/money-tree)](LICENSE)
 
 ### RSpec tested. Big Brother removed.
