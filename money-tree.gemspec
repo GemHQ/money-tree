@@ -6,8 +6,8 @@ require 'money-tree/version'
 Gem::Specification.new do |spec|
   spec.name          = "money-tree"
   spec.version       = MoneyTree::VERSION
-  spec.authors       = ["Micah Winkelspecht"]
-  spec.email         = ["winkelspecht@gmail.com"]
+  spec.authors       = ["Micah Winkelspecht", "Afri Schoedon"]
+  spec.email         = ["winkelspecht@gmail.com", "gems@q9f.cc"]
   spec.description   = %q{A Ruby Gem implementation of Bitcoin HD Wallets}
   spec.summary       = %q{Bitcoin Hierarchical Deterministic Wallets in Ruby! (Bitcoin standard BIP0032)}
   spec.homepage      = "https://github.com/gemhq/money-tree"
@@ -20,19 +20,20 @@ Gem::Specification.new do |spec|
 
   # used with gem install ... -P HighSecurity
   spec.cert_chain  = ["certs/mattatgemco.pem"]
+
   # Sign gem when evaluating spec with `gem` command
-  #  unless ENV has set a SKIP_GEM_SIGNING
+  # unless ENV has set a SKIP_GEM_SIGNING
   if ($0 =~ /gem\z/) and not ENV.include?("SKIP_GEM_SIGNING")
     spec.signing_key = File.join(Gem.user_home, ".ssh", "gem-private_key.pem")
   end
 
 
-  spec.add_dependency "ffi"
+  spec.add_dependency "ffi", "~> 1.15"
 
   spec.add_development_dependency "bundler", "~> 2.2"
-  spec.add_development_dependency "rake"
-  spec.add_development_dependency "rspec"
-  spec.add_development_dependency "simplecov"
-  spec.add_development_dependency "coveralls"
-  spec.add_development_dependency "pry"
+  spec.add_development_dependency "rake", "~> 13.0"
+  spec.add_development_dependency "rspec", "~> 3.10"
+  spec.add_development_dependency "simplecov", "~> 0.21"
+  spec.add_development_dependency "coveralls", "~> 0.8"
+  spec.add_development_dependency "pry", "~> 0.4"
 end
