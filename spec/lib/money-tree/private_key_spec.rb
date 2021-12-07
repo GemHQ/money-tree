@@ -17,7 +17,7 @@ describe MoneyTree::PrivateKey do
     end
 
     it "is a valid hex" do
-      expect(@key.to_hex).to eql('5eae5375fb5f7a0ea650566363befa2830ef441bdcb19198adf318faee86d64b'      )
+      expect(@key.to_hex).to eql('5eae5375fb5f7a0ea650566363befa2830ef441bdcb19198adf318faee86d64b')
     end
   end
 
@@ -31,7 +31,7 @@ describe MoneyTree::PrivateKey do
     end
 
     it "is a valid compressed wif" do
-      expect(@key.to_wif).to eql('KzPkwAXJ4wtXHnbamTaJqoMrzwCUUJaqhUxnqYhnZvZH6KhgmDPK'      )
+      expect(@key.to_wif).to eql('KzPkwAXJ4wtXHnbamTaJqoMrzwCUUJaqhUxnqYhnZvZH6KhgmDPK')
     end
   end
 
@@ -65,7 +65,7 @@ describe MoneyTree::PrivateKey do
     end
 
     it "is a valid base64" do
-      expect(@key.to_base64).to eql('Xq5Tdftfeg6mUFZjY776KDDvRBvcsZGYrfMY+u6G1ks='      )
+      expect(@key.to_base64).to eql('Xq5Tdftfeg6mUFZjY776KDDvRBvcsZGYrfMY+u6G1ks=')
     end
   end
 
