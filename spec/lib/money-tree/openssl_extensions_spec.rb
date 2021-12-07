@@ -42,6 +42,13 @@ describe MoneyTree::OpenSSLExtensions do
       expect { MoneyTree::OpenSSLExtensions.add(0, point_2) }.to raise_error(ArgumentError)
       expect { MoneyTree::OpenSSLExtensions.add(point_infinity, point_2) }.to raise_error(ArgumentError)
       expect { MoneyTree::OpenSSLExtensions.add(point_1, point_2) }.to_not raise_error
+      expect { MoneyTree::OpenSSLExtensions.validate_points(point_1) }.to_not raise_error
+    end
+
+    it "validates points correctly" do
+      expect { MoneyTree::OpenSSLExtensions.validate_points(point_1) }.to_not raise_error
+      expect { MoneyTree::OpenSSLExtensions.validate_points(point_2) }.to_not raise_error
+      expect { MoneyTree::OpenSSLExtensions.validate_points(point_infinity) }.to raise_error(ArgumentError)
     end
 
     it "should add points correctly" do
