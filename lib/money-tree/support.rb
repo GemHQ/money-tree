@@ -4,11 +4,11 @@ require 'base64'
 module MoneyTree
   module Support
     include OpenSSL
-    
+
     INT32_MAX = 256 ** [1].pack("L*").size
     INT64_MAX = 256 ** [1].pack("Q*").size
     BASE58_CHARS = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
-    
+
     def int_to_base58(int_val, leading_zero_bytes=0)
       base58_val, base = '', BASE58_CHARS.size
       while int_val > 0
@@ -40,7 +40,7 @@ module MoneyTree
       s
     end
     alias_method :base58_to_hex, :decode_base58
-    
+
     def to_serialized_base58(hex)
       hash = sha256 hex
       hash = sha256 hash
@@ -48,7 +48,7 @@ module MoneyTree
       address = hex + checksum
       encode_base58 address
     end
-    
+
     def from_serialized_base58(base58)
       hex = decode_base58 base58
       checksum = hex.slice!(-8..-1)
@@ -56,45 +56,45 @@ module MoneyTree
       raise EncodingError unless checksum == compare_checksum
       hex
     end
-    
+
     def digestify(digest_type, source, opts = {})
       source = [source].pack("H*") unless opts[:ascii]
       bytes_to_hex Digest.digest(digest_type, source)
     end
-    
+
     def sha256(source, opts = {})
       digestify('SHA256', source, opts)
     end
-    
+
     def ripemd160(source, opts = {})
       digestify('RIPEMD160', source, opts)
     end
-    
+
     def encode_base64(hex)
       Base64.encode64([hex].pack("H*")).chomp
     end
-    
+
     def decode_base64(base64)
       Base64.decode64(base64).unpack("H*")[0]
     end
-    
+
     def hmac_sha512(key, message)
       digest = Digest::SHA512.new
       HMAC.digest digest, key, message
     end
-    
+
     def hmac_sha512_hex(key, message)
       md = hmac_sha512(key, message)
       md.unpack("H*").first.rjust(64, '0')
     end
-    
+
     def bytes_to_int(bytes, base = 16)
       if bytes.is_a?(Array)
         bytes = bytes.pack("C*")
       end
       bytes.unpack("H*")[0].to_i(16)
     end
-    
+
     def int_to_hex(i, size=nil)
       hex = i.to_s(16).downcase
       if (hex.size % 2) != 0
@@ -107,19 +107,19 @@ module MoneyTree
         hex
       end
     end
-        
+
     def int_to_bytes(i)
       [int_to_hex(i)].pack("H*")
     end
-    
+
     def bytes_to_hex(bytes)
       bytes.unpack("H*")[0].downcase
     end
-    
+
     def hex_to_bytes(hex)
       [hex].pack("H*")
     end
-    
+
     def hex_to_int(hex)
       hex.to_i(16)
     end
