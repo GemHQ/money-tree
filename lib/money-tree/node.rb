@@ -90,7 +90,12 @@ module MoneyTree
       left_int = left_from_hash(hash)
       raise InvalidKeyForIndex, 'greater than or equal to order' if left_int >= MoneyTree::Key::ORDER # very low probability
       factor = BN.new left_int.to_s
-      child_public_key = public_key.uncompressed.group.generator.mul(factor).add(public_key.uncompressed.point).to_bn.to_i
+
+      gen_point = public_key.uncompressed.group.generator.mul(factor)
+
+      sum_point_hex = MoneyTree::OpenSSLExtensions.add(gen_point, public_key.uncompressed.point)
+      child_public_key = OpenSSL::PKey::EC::Point.new(public_key.group, OpenSSL::BN.new(sum_point_hex, 16)).to_bn.to_i
+
       raise InvalidKeyForIndex, 'at infinity' if child_public_key == 1/0.0 # very low probability
       child_chain_code = right_from_hash(hash)
       return child_public_key, child_chain_code
