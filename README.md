@@ -6,7 +6,7 @@
 [![GitHub top language](https://img.shields.io/github/languages/top/GemHQ/money-tree?color=red)](https://github.com/GemHQ/money-tree/pulse)
 
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/GemHQ/money-tree/Spec)](https://github.com/GemHQ/money-tree/actions)
-[![Coverage Status](https://img.shields.io/coveralls/GemHQ/money-tree.svg)](https://coveralls.io/r/GemHQ/money-tree?branch=master)
+[![Code Coverage](https://codecov.io/gh/GemHQ/money-tree/branch/master/graph/badge.svg?token=PF4BL36Z9q)](https://codecov.io/gh/GemHQ/money-tree)
 [![Code Climate](https://codeclimate.com/github/GemHQ/money-tree.png)](https://codeclimate.com/github/GemHQ/money-tree)
 [![GitHub](https://img.shields.io/github/license/GemHQ/money-tree)](LICENSE)
 
