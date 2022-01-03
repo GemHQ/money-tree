@@ -14,7 +14,7 @@ describe MoneyTree::PublicKey do
       end
 
       it "is a valid hex" do
-        expect(@key.uncompressed.to_hex).to eql('042dfc2557a007c93092c2915f11e8aa70c4f399a6753e2e908330014091580e4b11203096f1a1c5276a73f91b9465357004c2103cc42c63d6d330df589080d2e4'      )
+        expect(@key.uncompressed.to_hex).to eql('042dfc2557a007c93092c2915f11e8aa70c4f399a6753e2e908330014091580e4b11203096f1a1c5276a73f91b9465357004c2103cc42c63d6d330df589080d2e4')
       end
     end
 
@@ -24,7 +24,7 @@ describe MoneyTree::PublicKey do
       end
 
       it "is a valid compressed hex" do
-        expect(@key.to_hex).to eql('022dfc2557a007c93092c2915f11e8aa70c4f399a6753e2e908330014091580e4b'      )
+        expect(@key.to_hex).to eql('022dfc2557a007c93092c2915f11e8aa70c4f399a6753e2e908330014091580e4b')
       end
     end
 
@@ -40,7 +40,7 @@ describe MoneyTree::PublicKey do
       end
 
       it "is a valid bitcoin address" do
-        expect(@key.uncompressed.to_address).to eql('133bJA2xoVqBUsiR3uSkciMo5r15fLAaZg'      )
+        expect(@key.uncompressed.to_address).to eql('133bJA2xoVqBUsiR3uSkciMo5r15fLAaZg')
       end
     end
 
@@ -60,7 +60,17 @@ describe MoneyTree::PublicKey do
       end
 
       it "is a valid compressed bitcoin address" do
-        expect(@key.to_address).to eql('13uVqa35BMo4mYq9LiZrXVzoz9EFZ6aoXe'      )
+        expect(@key.to_address).to eql('13uVqa35BMo4mYq9LiZrXVzoz9EFZ6aoXe')
+      end
+    end
+    
+    describe "to_p2wpkh_p2sh" do
+      it "has 34 characters" do
+        expect(@key.to_p2wpkh_p2sh.length).to eql(34)
+      end
+    
+      it "is a valid p2wpkh_p2sh bitcoin address" do
+        expect(@key.to_p2wpkh_p2sh).to eql('31vNN7WVDxjvc5XZVKW3qV4B3nFLxsRPnE')
       end
     end
   end
@@ -76,7 +86,7 @@ describe MoneyTree::PublicKey do
       end
 
       it "is a valid hex" do
-        expect(@key.uncompressed.to_hex).to eql('042dfc2557a007c93092c2915f11e8aa70c4f399a6753e2e908330014091580e4b11203096f1a1c5276a73f91b9465357004c2103cc42c63d6d330df589080d2e4'      )
+        expect(@key.uncompressed.to_hex).to eql('042dfc2557a007c93092c2915f11e8aa70c4f399a6753e2e908330014091580e4b11203096f1a1c5276a73f91b9465357004c2103cc42c63d6d330df589080d2e4')
       end
     end
 
@@ -86,7 +96,7 @@ describe MoneyTree::PublicKey do
       end
 
       it "is a valid compressed hex" do
-        expect(@key.compressed.to_hex).to eql('022dfc2557a007c93092c2915f11e8aa70c4f399a6753e2e908330014091580e4b'      )
+        expect(@key.compressed.to_hex).to eql('022dfc2557a007c93092c2915f11e8aa70c4f399a6753e2e908330014091580e4b')
       end
     end
 
@@ -102,7 +112,7 @@ describe MoneyTree::PublicKey do
       end
 
       it "is a valid bitcoin address" do
-        expect(@key.uncompressed.to_address).to eql('133bJA2xoVqBUsiR3uSkciMo5r15fLAaZg'      )
+        expect(@key.uncompressed.to_address).to eql('133bJA2xoVqBUsiR3uSkciMo5r15fLAaZg')
       end
     end
 
@@ -112,7 +122,17 @@ describe MoneyTree::PublicKey do
       end
 
       it "is a valid compressed bitcoin address" do
-        expect(@key.compressed.to_address).to eql('13uVqa35BMo4mYq9LiZrXVzoz9EFZ6aoXe'      )
+        expect(@key.compressed.to_address).to eql('13uVqa35BMo4mYq9LiZrXVzoz9EFZ6aoXe')
+      end
+    end
+    
+    describe "to_p2wpkh_p2sh" do
+      it "has 34 characters" do
+        expect(@key.to_p2wpkh_p2sh.length).to eql(34)
+      end
+    
+      it "is a valid p2wpkh_p2sh bitcoin address" do
+        expect(@key.to_p2wpkh_p2sh).to eql('3JUBTtepUbTZgUtjbde7UANs5cey8N57xa')
       end
     end
 
@@ -165,6 +185,18 @@ describe MoneyTree::PublicKey do
       @key.compressed
       after_str = @key.to_s
       expect(before_str).to eql(after_str)
+    end
+  end
+
+  context "wobine's blackboard 101 series" do
+    # ref https://github.com/wobine/blackboard101/blob/e991ea0b98fd26059bf3806e5749b5e5f737e791/EllipticCurvesPart4-PrivateKeyToPublicKey.py
+    subject(:wobine) { MoneyTree::PrivateKey.new key: 'A0DC65FFCA799873CBEA0AC274015B9526505DAAAED385155425F7337704883E' }
+
+    it "always recovers wobine's public keys" do
+      expect(wobine.key).to eq 'a0dc65ffca799873cbea0ac274015b9526505daaaed385155425f7337704883e'
+      public_key = MoneyTree::PublicKey.new wobine
+      expect(public_key.key).to eq '020791dc70b75aa995213244ad3f4886d74d61ccd3ef658243fcad14c9ccee2b0a'
+      expect(public_key.uncompressed.to_hex).to eq '040791dc70b75aa995213244ad3f4886d74d61ccd3ef658243fcad14c9ccee2b0aa762fbc6ac0921b8f17025bb8458b92794ae87a133894d70d7995fc0b6b5ab90'
     end
   end
 

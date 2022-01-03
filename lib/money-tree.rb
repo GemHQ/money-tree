@@ -9,5 +9,4 @@ require "money-tree/networks"
 require "money-tree/node"
 
 module MoneyTree
-
 end

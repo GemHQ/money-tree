@@ -130,5 +130,20 @@ module MoneyTree
     def hex_to_int(hex)
       hex.to_i(16)
     end
+    
+    def encode_p2wpkh_p2sh(value)
+      chk = [Digest::SHA256.hexdigest(Digest::SHA256.digest(value))].pack('H*')[0...4]
+      encode_base58 (value + chk).unpack('H*')[0]
+    end
+    
+    def custom_hash_160(value)
+      [OpenSSL::Digest::RIPEMD160.hexdigest(Digest::SHA256.digest(value))].pack('H*')
+    end
+    
+    def convert_p2wpkh_p2sh(key_hex, prefix)
+      push_20 = ['0014'].pack('H*')
+      script_sig = push_20 + custom_hash_160([key_hex].pack('H*'))
+      encode_p2wpkh_p2sh(prefix + custom_hash_160(script_sig))
+    end
   end
 end

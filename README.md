@@ -1,13 +1,23 @@
-[![Build Status](https://travis-ci.org/GemHQ/money-tree.png)](https://travis-ci.org/GemHQ/money-tree) [![Coverage Status](https://img.shields.io/coveralls/GemHQ/money-tree.svg)](https://coveralls.io/r/GemHQ/money-tree?branch=master) [![Code Climate](https://codeclimate.com/github/GemHQ/money-tree.png)](https://codeclimate.com/github/GemHQ/money-tree) [![Gem Version](https://badge.fury.io/rb/money-tree.png)](http://badge.fury.io/rb/money-tree)
 # MoneyTree
+
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/GemHQ/money-tree)](https://github.com/GemHQ/money-tree/releases)
+[![Gem](https://img.shields.io/gem/v/money-tree)](https://rubygems.org/gems/money-tree)
+[![Gem](https://img.shields.io/gem/dt/money-tree)](https://rubygems.org/gems/money-tree)
+[![GitHub top language](https://img.shields.io/github/languages/top/GemHQ/money-tree?color=red)](https://github.com/GemHQ/money-tree/pulse)
+
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/GemHQ/money-tree/Spec)](https://github.com/GemHQ/money-tree/actions)
+[![Coverage Status](https://img.shields.io/coveralls/GemHQ/money-tree.svg)](https://coveralls.io/r/GemHQ/money-tree?branch=master)
+[![Code Climate](https://codeclimate.com/github/GemHQ/money-tree.png)](https://codeclimate.com/github/GemHQ/money-tree)
+[![GitHub](https://img.shields.io/github/license/GemHQ/money-tree)](LICENSE)
+
 ### RSpec tested. Big Brother removed.
 
 MoneyTree is a Ruby implementation of Bitcoin Wallets. Specifically, it supports [Hierachical Deterministic wallets](https://en.bitcoin.it/wiki/Deterministic_Wallet) according to the protocol specified in [BIP0032](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki).
 
 ___
-If you find this helpful, please consider a small Bitcoin donation to 1nj2kie1hATcFbAaD7dEY53QaxNgt4KBp
+If you find this helpful, please consider a small Bitcoin donation to `1nj2kie1hATcFbAaD7dEY53QaxNgt4KBp`.
 
-![Donate BTC](https://raw.github.com/wink/money-tree/master/donation_btc_qr_code.gif)
+![Donate BTC](./.github/donation_btc_qr_code.gif)
 ___
 
 ## Why would I want an HD Wallet?
@@ -163,7 +173,7 @@ Because we need multiple pieces of info to reconstruct nodes in a tree, when we'
 "xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8"
 ```
 
-In addition to the key and the chain code, this encoding also includes info about the depth and index of the key, along with a fingerprint of its parent key (which I presume is for quickly sorting a big pile of keys into a tree).   
+In addition to the key and the chain code, this encoding also includes info about the depth and index of the key, along with a fingerprint of its parent key (which I presume is for quickly sorting a big pile of keys into a tree).
 
 These are the addresses that you should use to represent each node in the tree structure, however these are NOT the bitcoin addresses you should pass around for receiving money. These are more for storing inside a wallet file so that you can reconstruct the tree.
 

@@ -252,6 +252,11 @@ module MoneyTree
       to_serialized_base58 address
     end
     alias :to_s :to_address
+    
+    def to_p2wpkh_p2sh(network: :bitcoin)
+      prefix = [NETWORKS[network][:p2sh_version]].pack('H*')
+      convert_p2wpkh_p2sh(to_hex, prefix)
+    end
 
     def to_bech32_address(network: :bitcoin)
       hrp = NETWORKS[network][:human_readable_part]
