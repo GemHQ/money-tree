@@ -46,7 +46,7 @@ describe MoneyTree::PublicKey do
 
     describe "to_bech32_address" do
       it "has 42 characters" do
-        expect(@key.to_bech32_address).to eql(42)
+        expect(@key.to_bech32_address.length).to eql(42)
       end
 
       it "is a valid bitcoin address" do
