@@ -1,4 +1,16 @@
 source "https://rubygems.org"
 
-# Specify your gem's dependencies in money-tree.gemspec
-gemspec
+gem "openssl", "~> 3.0"
+gem "bech32", "~> 1.2"
+
+group :test, :development do
+  gem "bundler", "~> 2.2"
+  gem "codecov", "~> 0.6"
+  gem "pry", "~> 0.14"
+  gem "rake", "~> 13.0"
+  gem "rdoc", "~> 6.3"
+  gem "rspec", "~> 3.10"
+  gem "rufo", "~> 0.13"
+  gem "simplecov", "~> 0.21"
+  gem "yard", "~> 0.9"
+end
