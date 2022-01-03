@@ -1,12 +1,11 @@
 # encoding ascii-8bit
 
-require 'openssl'
+require "openssl"
 
 module MoneyTree
   class Key
-    include OpenSSL
     include Support
-    extend Support
+
     class KeyInvalid < StandardError; end
     class KeyGenerationFailure < StandardError; end
     class KeyImportFailure < StandardError; end
@@ -14,10 +13,13 @@ module MoneyTree
     class InvalidWIFFormat < StandardError; end
     class InvalidBase64Format < StandardError; end
 
-    attr_reader :options, :key, :raw_key
+    attr_reader :options
+    attr_reader :key
+    attr_reader :raw_key
+
     attr_accessor :ec_key
 
-    GROUP_NAME = 'secp256k1'
+    GROUP_NAME = "secp256k1"
     ORDER = "fffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141".to_i(16)
 
     def valid?(eckey = nil)
@@ -35,7 +37,6 @@ module MoneyTree
   end
 
   class PrivateKey < Key
-
     def initialize(opts = {})
       @options = opts
       @ec_key = PKey::EC.new GROUP_NAME
@@ -70,14 +71,9 @@ module MoneyTree
     end
 
     def parse_raw_key
-      result = if raw_key.is_a?(Integer) then from_integer
-      elsif hex_format? then from_hex
-      elsif base64_format? then from_base64
-      elsif compressed_wif_format? then from_wif
-      elsif uncompressed_wif_format? then from_wif
-      else
-        raise KeyFormatNotFound
-      end
+      result = if raw_key.is_a?(Integer) then from_integer elsif hex_format? then from_hex elsif base64_format? then from_base64 elsif compressed_wif_format? then from_wif elsif uncompressed_wif_format? then from_wif else
+          raise KeyFormatNotFound
+        end
       result.downcase
     end
 
@@ -113,7 +109,7 @@ module MoneyTree
 
     def wif_format?(compression)
       length = compression == :compressed ? 52 : 51
-      wif_prefixes = MoneyTree::NETWORKS.map {|k, v| v["#{compression}_wif_chars".to_sym]}.flatten
+      wif_prefixes = MoneyTree::NETWORKS.map { |k, v| v["#{compression}_wif_chars".to_sym] }.flatten
       raw_key.length == length && wif_prefixes.include?(raw_key.slice(0))
     end
 
@@ -160,7 +156,6 @@ module MoneyTree
     def to_s(network: :bitcoin)
       to_wif(network: network)
     end
-
   end
 
   class PublicKey < Key
@@ -209,19 +204,19 @@ module MoneyTree
       self.compression = opts[:compressed] ? :compressed : :uncompressed
       bn = BN.new int_to_hex(int), 16
       @point = PKey::EC::Point.new group, bn
-      raise KeyInvalid, 'point is not on the curve' unless @point.on_curve?
+      raise KeyInvalid, "point is not on the curve" unless @point.on_curve?
     end
 
     def parse_raw_key
       result = if raw_key.is_a?(Integer)
-        set_point raw_key
-      elsif hex_format?
-        set_point hex_to_int(raw_key), compressed: false
-      elsif compressed_hex_format?
-        set_point hex_to_int(raw_key), compressed: true
-      else
-        raise KeyFormatNotFound
-      end
+          set_point raw_key
+        elsif hex_format?
+          set_point hex_to_int(raw_key), compressed: false
+        elsif compressed_hex_format?
+          set_point hex_to_int(raw_key), compressed: true
+        else
+          raise KeyFormatNotFound
+        end
       to_hex
     end
 
@@ -251,10 +246,11 @@ module MoneyTree
       address = NETWORKS[network][:address_version] + hash
       to_serialized_base58 address
     end
+
     alias :to_s :to_address
-    
+
     def to_p2wpkh_p2sh(network: :bitcoin)
-      prefix = [NETWORKS[network][:p2sh_version]].pack('H*')
+      prefix = [NETWORKS[network][:p2sh_version]].pack("H*")
       convert_p2wpkh_p2sh(to_hex, prefix)
     end
 

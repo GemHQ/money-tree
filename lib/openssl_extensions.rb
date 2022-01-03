@@ -1,12 +1,14 @@
 # encoding: ascii-8bit
 
-require 'openssl'
+require "openssl"
 
 module MoneyTree
   module OpenSSLExtensions
-    def self.add(point_0, point_1)
+    extend self
+
+    def add(point_0, point_1)
       validate_points(point_0, point_1)
-      group = OpenSSL::PKey::EC::Group.new('secp256k1')
+      group = OpenSSL::PKey::EC::Group.new("secp256k1")
       point_0_hex = point_0.to_bn.to_s(16)
       point_0_pt = OpenSSL::PKey::EC::Point.new(group, OpenSSL::BN.new(point_0_hex, 16))
       point_1_hex = point_1.to_bn.to_s(16)
@@ -15,7 +17,7 @@ module MoneyTree
       sum_point.to_bn.to_s(16)
     end
 
-    def self.validate_points(*points)
+    def validate_points(*points)
       points.each do |point|
         if !point.is_a?(OpenSSL::PKey::EC::Point)
           raise ArgumentError, "point must be an OpenSSL::PKey::EC::Point object"

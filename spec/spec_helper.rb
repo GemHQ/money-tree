@@ -1,2 +1,1 @@
-require 'money-tree'
-require 'pry'
+require "money-tree"

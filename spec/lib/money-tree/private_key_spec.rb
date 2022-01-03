@@ -1,4 +1,4 @@
-require 'spec_helper'
+require "spec_helper"
 
 describe MoneyTree::PrivateKey do
   before do
@@ -17,7 +17,7 @@ describe MoneyTree::PrivateKey do
     end
 
     it "is a valid hex" do
-      expect(@key.to_hex).to eql('5eae5375fb5f7a0ea650566363befa2830ef441bdcb19198adf318faee86d64b')
+      expect(@key.to_hex).to eql("5eae5375fb5f7a0ea650566363befa2830ef441bdcb19198adf318faee86d64b")
     end
   end
 
@@ -31,7 +31,7 @@ describe MoneyTree::PrivateKey do
     end
 
     it "is a valid compressed wif" do
-      expect(@key.to_wif).to eql('KzPkwAXJ4wtXHnbamTaJqoMrzwCUUJaqhUxnqYhnZvZH6KhgmDPK')
+      expect(@key.to_wif).to eql("KzPkwAXJ4wtXHnbamTaJqoMrzwCUUJaqhUxnqYhnZvZH6KhgmDPK")
     end
   end
 
@@ -41,17 +41,17 @@ describe MoneyTree::PrivateKey do
     end
 
     it "starts with 5" do
-      expect(@key.to_wif(compressed: false)[0]).to eql('5')
+      expect(@key.to_wif(compressed: false)[0]).to eql("5")
     end
 
     it "is valid" do
-      expect(@key.to_wif(compressed: false)).to eql('5JXz5ZyFk31oHVTQxqce7yitCmTAPxBqeGQ4b7H3Aj3L45wUhoa')
+      expect(@key.to_wif(compressed: false)).to eql("5JXz5ZyFk31oHVTQxqce7yitCmTAPxBqeGQ4b7H3Aj3L45wUhoa")
     end
   end
 
   describe "from_wif(wif)" do
     it "returns the key from a wif" do
-      expect(@key.from_wif("5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ")).to eql('0c28fca386c7a227600b2fe50b7cae11ec86d3bf1fbe471be89827e19d72aa1d')
+      expect(@key.from_wif("5HueCGU8rMjxEXxiPuD5BDku4MkFqeZyd4dZ1jvhTVqvbTLvyTJ")).to eql("0c28fca386c7a227600b2fe50b7cae11ec86d3bf1fbe471be89827e19d72aa1d")
     end
 
     it "raises an error on bad checksum" do
@@ -65,7 +65,7 @@ describe MoneyTree::PrivateKey do
     end
 
     it "is a valid base64" do
-      expect(@key.to_base64).to eql('Xq5Tdftfeg6mUFZjY776KDDvRBvcsZGYrfMY+u6G1ks=')
+      expect(@key.to_base64).to eql("Xq5Tdftfeg6mUFZjY776KDDvRBvcsZGYrfMY+u6G1ks=")
     end
   end
 
@@ -76,7 +76,7 @@ describe MoneyTree::PrivateKey do
     end
 
     it "returns the key from base64 encoding" do
-      expect(@key.from_base64("Xq5Tdftfeg6mUFZjY776KDDvRBvcsZGYrfMY+u6G1ks=")).to eql('5eae5375fb5f7a0ea650566363befa2830ef441bdcb19198adf318faee86d64b')
+      expect(@key.from_base64("Xq5Tdftfeg6mUFZjY776KDDvRBvcsZGYrfMY+u6G1ks=")).to eql("5eae5375fb5f7a0ea650566363befa2830ef441bdcb19198adf318faee86d64b")
     end
 
     it "raises an error on bad encoding" do
@@ -109,12 +109,12 @@ describe MoneyTree::PrivateKey do
 
   context "testnet" do
     before do
-      @key = MoneyTree::PrivateKey.new key: 'cRhes8SBnsF6WizphaRKQKZZfDniDa9Bxcw31yKeEC1KDExhxFgD'
+      @key = MoneyTree::PrivateKey.new key: "cRhes8SBnsF6WizphaRKQKZZfDniDa9Bxcw31yKeEC1KDExhxFgD"
     end
 
     describe "to_wif" do
       it "returns same wif" do
-        expect(@key.to_wif(network: :bitcoin_testnet)).to eql('cRhes8SBnsF6WizphaRKQKZZfDniDa9Bxcw31yKeEC1KDExhxFgD')
+        expect(@key.to_wif(network: :bitcoin_testnet)).to eql("cRhes8SBnsF6WizphaRKQKZZfDniDa9Bxcw31yKeEC1KDExhxFgD")
       end
     end
   end
