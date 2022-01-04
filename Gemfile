@@ -1,8 +1,5 @@
 source "https://rubygems.org"
 
-gem "openssl", "~> 3.0"
-gem "bech32", "~> 1.2"
-
 group :test, :development do
   gem "bundler", "~> 2.2"
   gem "codecov", "~> 0.6"
@@ -14,3 +11,5 @@ group :test, :development do
   gem "simplecov", "~> 0.21"
   gem "yard", "~> 0.9"
 end
+
+gemspec
