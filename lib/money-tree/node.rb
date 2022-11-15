@@ -86,6 +86,17 @@ module MoneyTree
       return child_private_key, child_chain_code
     end
 
+    def derive_parent_node(parent_key)
+      message = parent_key.public_key.to_bytes << i_as_bytes(index)
+      hash = hmac_sha512 hex_to_bytes(parent_key.chain_code_hex), message
+      priv = (private_key.to_i - left_from_hash(hash)) % MoneyTree::Key::ORDER
+      MoneyTree::Node.new( depth: parent_key.depth,
+                          index: parent_key.index,
+                          private_key: MoneyTree::PrivateKey.new(key: priv),
+                          public_key: parent_key.public_key,
+                          chain_code: parent_key.chain_code)
+    end
+
     def derive_public_key(i = 0)
       raise PrivatePublicMismatch if i >= PRIVATE_RANGE_LIMIT
       message = public_derivation_message(i)
