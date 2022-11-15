@@ -1313,12 +1313,12 @@ describe MoneyTree::Master do
     end
 
     describe "deriving a parent node" do
-      before do 
+      before do
         @master = MoneyTree::Master.new seed_hex: "000102030405060708090a0b0c0d0e0f"
-        @node = @master.node_for_path('m/101p')
-        @subnode = @node.node_for_path('1')
+        @node = @master.node_for_path("m/101p")
+        @subnode = @node.node_for_path("1")
       end
-      context "m/101'/1 -> m/101'" do 
+      context "m/101'/1 -> m/101'" do
         it "correctly derives from a subnode with priv key to a node knowing it's public key" do
           node_priv_hex = @node.private_key.to_hex
           @node.strip_private_info!
@@ -1332,9 +1332,9 @@ describe MoneyTree::Master do
           expect(@node.derive_parent_node(@master).private_key.to_hex).to_not eq(master_priv_hex)
         end
       end
-      context 'm/101 -> master' do
+      context "m/101 -> master" do
         it "correctly derives from a non-hardened node with priv key to a master node knowing it's public key" do
-          @node = @master.node_for_path('m/101')
+          @node = @master.node_for_path("m/101")
           master_priv_hex = @master.private_key.to_hex
           expect(@node.derive_parent_node(@master).private_key.to_hex).to eq(master_priv_hex)
         end
