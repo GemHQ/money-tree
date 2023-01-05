@@ -9,14 +9,17 @@ on:
     branches:
       - master
 
+env:
+  OPENSSL_CONF: ${GITHUB_WORKSPACE}/config/openssl.conf
+
 jobs:
   test:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, ubuntu-22.04, macos-latest, macos-12]
-        ruby: ['2.7', '3.0', '3.1', '3.2']
+        os: [ubuntu-18.04, ubuntu-20.04, ubuntu-22.04, macos-10, macos-11, macos-12]
+        ruby: ['2.6', '2.7', '3.0', '3.1', '3.2']
     steps:
     - uses: actions/checkout@v2
     - uses: ruby/setup-ruby@v1
