@@ -62,7 +62,7 @@ module MoneyTree
         OpenSSL::ASN1::Integer(1),
         OpenSSL::ASN1::OctetString(OpenSSL::BN.new(key, 16).to_s(2)),
         OpenSSL::ASN1::ObjectId(GROUP_NAME, 0, :EXPLICIT),
-        OpenSSL::ASN1::BitString(calculate_public_key.to_octet_string(:uncompressed), 1, :EXPLICIT)
+        OpenSSL::ASN1::BitString(calculate_public_key.to_octet_string(:uncompressed), 1, :EXPLICIT),
       ])
     end
 

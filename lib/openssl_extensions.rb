@@ -2,6 +2,10 @@
 
 require "openssl"
 
+ENV["OPENSSL_CONF"] = File.expand_path(
+  File.join(File.dirname(__FILE__), "..", "config", "openssl.conf")
+)
+
 module MoneyTree
   module OpenSSLExtensions
     extend self
