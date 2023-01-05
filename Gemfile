@@ -12,8 +12,4 @@ group :test, :development do
   gem "yard", "~> 0.9"
 end
 
-ENV["OPENSSL_CONF"] = File.expand_path(
-  File.join(File.dirname(__FILE__), "..", "config", "openssl.conf")
-)
-
 gemspec
