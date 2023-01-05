@@ -22,8 +22,8 @@ describe MoneyTree::OpenSSLExtensions do
   include MoneyTree::OpenSSLExtensions
 
   context "with inputs" do
-    let(:key1) { OpenSSL::PKey::EC.new("secp256k1").generate_key }
-    let(:key2) { OpenSSL::PKey::EC.new("secp256k1").generate_key }
+    let(:key1) { OpenSSL::PKey::EC.generate("secp256k1") }
+    let(:key2) { OpenSSL::PKey::EC.generate("secp256k1") }
     let(:point_1) { key1.public_key }
     let(:point_2) { key2.public_key }
 
