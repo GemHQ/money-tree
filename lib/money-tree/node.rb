@@ -12,11 +12,13 @@ module MoneyTree
     attr_reader :parent
 
     PRIVATE_RANGE_LIMIT = 0x80000000
+    DEFAULT_BIP = 44
 
     class PublicDerivationFailure < StandardError; end
     class InvalidKeyForIndex < StandardError; end
     class ImportError < StandardError; end
     class PrivatePublicMismatch < StandardError; end
+    class VersionNotImplemented < StandardError; end
 
     def initialize(opts = {})
       opts.each { |k, v| instance_variable_set "@#{k}", v }
@@ -123,10 +125,16 @@ module MoneyTree
       bytes_to_int hash.bytes.to_a[32..-1]
     end
 
-    def to_serialized_hex(type = :public, network: :bitcoin)
+    def version_bytes(type:, network:, bip:)
+      sym_bip = "bip_#{bip}".to_sym
+      version_bytes = NETWORKS.dig(network, :extended_version, type, sym_bip)
+      raise VersionNotImplemented unless version_bytes
+      version_bytes.gsub('0x','')
+    end
+
+    def to_serialized_hex(type = :public, network: :bitcoin, bip: DEFAULT_BIP)
       raise PrivatePublicMismatch if type.to_sym == :private && private_key.nil?
-      version_key = type.to_sym == :private ? :extended_privkey_version : :extended_pubkey_version
-      hex = NETWORKS[network][version_key] # version (4 bytes)
+      hex = version_bytes(type: type, network: network, bip: bip) # version (4 bytes)
       hex += depth_hex(depth) # depth (1 byte)
       hex += parent_fingerprint # fingerprint of key (4 bytes)
       hex += index_hex(index) # child number i (4 bytes)
@@ -134,9 +142,14 @@ module MoneyTree
       hex += type.to_sym == :private ? "00#{private_key.to_hex}" : public_key.compressed.to_hex
     end
 
-    def to_bip32(type = :public, network: :bitcoin)
+    def to_bip(bip, type: :public, network: :bitcoin)
       raise PrivatePublicMismatch if type.to_sym == :private && private_key.nil?
-      to_serialized_base58 to_serialized_hex(type, network: network)
+      to_serialized_base58 to_serialized_hex(type, network: network, bip: bip)
+    end
+
+    # keep old way
+    def to_bip32(type = :public, network: :bitcoin)
+      to_bip(DEFAULT_BIP, type: type, network: network)
     end
 
     def to_identifier(compressed = true)

@@ -119,6 +119,61 @@ describe MoneyTree::Master do
             expect(@master.to_serialized_hex).to eql("0488b21e000000000000000000873dff81c02f525623fd1fe5167eac3a55a049de3d314bb42ee227ffed37d5080339a36013301597daef41fbe593a02cc513d0b55527ec2df1050e2e8ff49c85c2")
             expect(@master.to_bip32).to eql("xpub661MyMwAqRbcFtXgS5sYJABqqG9YLmC4Q1Rdap9gSE8NqtwybGhePY2gZ29ESFjqJoCu1Rupje8YtGqsefD265TMg7usUDFdp6W1EGMcet8")
           end
+
+          context 'with version prefix' do
+            it 'contains version prefix' do
+              expect(@master.to_bip(49).include?('ypub')).to be(true)
+              expect(@master.to_bip(84).include?('zpub')).to be(true)
+            end
+          end
+        end
+
+        describe "m/44'/0'/0'/0 address" do
+          before do
+            @node = @master.node_for_path "m/44'/0'/0'/0"
+          end
+
+          it 'generate serialized private key' do
+            expect(@node.to_bip(44, type: :private))
+              .to eql('xprvA2EqnHNMfq9w1nDwQanUKHtfZcn4xvGAbc2ugxHMbnDdQbQUm9w6EWF7ZKmXG4NhQyFF7vp6AtoAFjxtc56osAtRKA1T9KJYwfiesFD8wiT')
+          end
+
+          it 'generate serialized public key' do
+            expect(@node.to_bip(44))
+              .to eql('xpub6FECBnuFWCiEEGJQWcKUgRqQ7ecZNNz1xpxWVLgyA7kcHPjdJhFLnJZbQbvQSPVr2R9xVWXjoVgGUom21dw9AkQkiKKz2YYGYGUdj7RaiNA')
+          end
+        end
+
+        describe "m/49'/0'/0'/0 address" do
+          before do
+            @node = @master.node_for_path "m/49'/0'/0'/0"
+          end
+
+          it 'generate serialized private key' do
+            expect(@node.to_bip(49, type: :private))
+              .to eql('yprvALM988hxmYs98gPgnPQa2G7rg8Yuemm2m9Q31pyqhsdQSzpMfQnDgVMUjjNvyWvYcUwmZ8m6hFoBEd75MLygRxXws2Wvw2Rpbi3usvgSRmZ')
+          end
+
+          it 'generate serialized public key' do
+            expect(@node.to_bip(49))
+              .to eql('ypub6ZLVXeErbvRSMAU9tQwaPQ4bEAPQ4EUt8NKdpDPTGDAPKo9WCx6UEHfxb2WH83jfwcouCGZqwW8L9f1KbUm7MJSDCQbQWiARmwKJ5Pv5J9q')
+          end
+        end
+
+        describe "m/84'/0'/0'/0 address" do
+          before do
+            @node = @master.node_for_path "m/84'/0'/0'/0"
+          end
+
+          it 'generate serialized private key' do
+            expect(@node.to_bip(84, type: :private))
+              .to eql('zprvAfvDLyVt5SKubEEs54xybXAXUetAttxXHqXow4nxv3b2QkBBu2Wqe7PuBk1LzedwcEfXQzpBK661EtRWDDbiKNjgv3KhNAzVJ1WxF9z2VV8')
+          end
+
+          it 'generate serialized public key' do
+            expect(@node.to_bip(84))
+              .to eql('zpub6tuZkV2muotCoiKLB6Vyxf7G2gifJMgNf4TQjTCaUP81HYWLSZq6BuiP2zb225YP35YkdF8wzFsDy51Z2fx14tyVCKuNt35XdNB27M2AZwU')
+          end
         end
 
         describe "m/2147483648" do
@@ -1243,6 +1298,20 @@ describe MoneyTree::Master do
           expect {
             MoneyTree::Node.from_bip32 "xprv9s21ZrQH143K3QTDL4LXw2F7HEK3wJUD2nW2nRk4stbPy6cq3jPPqjiChkVvvNKmPGJxWUtg6LnF5kejMRNNU3TGtRBeJgk33yuGBxrMPHL"
           }.to raise_error EncodingError
+        end
+      end
+    end
+
+    describe '#version_bytes' do
+      before do
+        @master = MoneyTree::Master.new seed_hex: "000102030405060708090a0b0c0d0e0f"
+      end
+
+      context 'when version is not implemented' do
+        it 'should raise an error' do
+          expect {
+            @master.version_bytes(type: :public, network: :bitcoin, bip: :unknown)
+          }.to raise_error(MoneyTree::Node::VersionNotImplemented)
         end
       end
     end
