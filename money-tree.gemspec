@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
   }.freeze
 
   spec.platform = Gem::Platform::RUBY
-  spec.required_ruby_version = ">= 2.7", "< 4.0"
+  spec.required_ruby_version = ">= 2.7", "< 5.0"
 
   spec.add_dependency "openssl", "~> 3.1"
   spec.add_dependency "bech32", "~> 1.3"
